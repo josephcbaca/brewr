@@ -22,7 +22,6 @@ module.exports = function (app) {
   // 2 - brewery
   // 3 - admin
   app.post("/api/signup", (req, res) => {
-    console.log(req.body);
     db.User.create({
       userType: req.body.userType,
       userName: req.body.userName,
@@ -62,7 +61,7 @@ module.exports = function (app) {
     //Get all posts that belong to the current user
     db.Post.findAll({
       where: {
-        userID: req.user.id
+        id: req.body.id
       }
     }).then(userposts => {
       res.json(userposts);
@@ -72,10 +71,8 @@ module.exports = function (app) {
   // POST route for saving a new post
   app.post("/api/posts", (req, res) => {
     db.Post.create({
-      // title: req.body.title,
       body: req.body.body,
-      userId: req.user.id
-      // category: req.body.category
+      UserId: req.body.id
     }).then(data => {
       res.json(data);
     });
