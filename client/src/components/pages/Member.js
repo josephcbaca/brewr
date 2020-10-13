@@ -5,12 +5,12 @@ import Navbar from "../Navbar";
 
 function Member({ loggedIn, currentUser }) {
     const [userPost, setUserPost] = useState();
-
+console.log(currentUser.id)
     function createPost(e) {
         e.preventDefault();
         const bodyObj = {
             body: userPost,
-            userID: currentUser.id,
+            id: currentUser.id
         }
         console.log(bodyObj);
         axios.post("/api/posts", bodyObj)

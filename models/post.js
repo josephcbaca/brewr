@@ -1,10 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
-    const Post = sequelize.define("Post", {
+    let Post = sequelize.define("Post", {
       body: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-          len: [280]
+          len: [1]
         }
       }
     });
@@ -19,4 +19,3 @@ module.exports = function(sequelize, DataTypes) {
   
     return Post;
   };
-  
