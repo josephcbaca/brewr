@@ -1,33 +1,35 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import CommentCard from "../CommentCard";
 import Navbar from "../Navbar";
 
 function Member({ loggedIn, currentUser }) {
     const [userPost, setUserPost] = useState();
-console.log(currentUser.id)
+    const textInput = React.useRef();
+
     function createPost(e) {
         e.preventDefault();
         const bodyObj = {
             body: userPost,
             id: currentUser.id
         }
-        console.log(bodyObj);
         axios.post("/api/posts", bodyObj)
             .then(res => {
-                console.log(res);
                 if (!res.data.errmsg) {
                     console.log("success");
-                    // history.push("/");
+                    textInput.current.value = ""
                 } else {
                     console.log("ERR");
                 }
             })
             .catch(err => {
-                console.log("Signup Error: ");
+                console.log("Blog post errored.  Try again.");
                 console.log(err);
             })
     }
+
+
 
     if (!loggedIn) return (<p className="black-headings"> Please log in before browsing games! <Link className="link-text" to="/login">Login</Link>
     </p>);
@@ -41,6 +43,7 @@ console.log(currentUser.id)
                         rows="3"
                         placeholder="Tell us your beer thoughts!"
                         name="body"
+                        ref={textInput}
                         onChange={e => setUserPost(e.target.value)}
                     ></textarea>
                     <button
@@ -51,6 +54,7 @@ console.log(currentUser.id)
                     </button>
                 </div>
             </form>
+            <CommentCard currentUser={currentUser} />
         </div>
     </div>);
 }
