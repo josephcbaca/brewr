@@ -61,7 +61,7 @@ module.exports = function (app) {
     //Get all posts that belong to the current user
     db.Post.findAll({
       where: {
-        id: req.body.id
+        UserId: req.body.id
       }
     }).then(userposts => {
       res.json(userposts);
